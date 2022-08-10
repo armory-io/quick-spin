@@ -66,22 +66,21 @@ RUN wget -nv https://github.com/armory/ecr-token/releases/download/${ECR_TOKEN_V
   && chmod +x ./ecr-token \
   && rm /ecr-token_${ECR_TOKEN_VERSION}_linux_amd64.tar.gz
 
-# -- Install clouddriver --
-COPY install/clouddriver /opt/clouddriver
-
-RUN adduser -D spinnaker \
-  && addgroup spinnaker spinnaker \
-  && mkdir -p /opt/clouddriver/plugins \
-  && chown -R spinnaker:spinnaker /opt/clouddriver/plugins
+## -- Install clouddriver --
+#COPY install/clouddriver /opt/clouddriver
+#
+#RUN adduser -D spinnaker \
+#  && addgroup spinnaker spinnaker \
+#  && mkdir -p /opt/clouddriver/plugins \
+#  && chown -R spinnaker:spinnaker /opt/clouddriver/plugins
 
 ## Bake plugins
-COPY install/plugins /opt/clouddriver/plugins
+#COPY install/plugins /opt/clouddriver/plugins
 
 # -- Install deck --
-#COPY install/deck-build/dist /opt/deck/html/
-
-COPY install/deck-docker /opt/deck/bin
-
+# Install a simple cli to get ecr token
+COPY --from=armory/deck:2.28.0 /opt/deck /opt/deck
+COPY docker opt/deck/bin
 WORKDIR /opt/deck
 
 RUN adduser -D -G www-data www-data
@@ -90,20 +89,25 @@ RUN bin/setup-apache2.sh
 
 RUN chown -R www-data:www-data /opt/deck
 
-# -- Install gate --
-COPY install/gate /opt/gate
+USER www-data
 
-RUN mkdir -p /opt/gate/plugins && chown -R spinnaker:spinnaker /opt/gate/plugins && \
-  mkdir -p /opt/gate/deck-plugins && chown -R spinnaker:spinnaker /opt/gate/deck-plugins && \
-  mkdir -p /opt/gate/local-plugin-repo && chown -R spinnaker:spinnaker /opt/gate/local-plugin-repo
 
-## Bake plugins
-## COPY true is due to this issue: https://github.com/moby/moby/issues/37965
-COPY install/plugins /opt/gate/plugins
-RUN true
-COPY install/deck-plugins /opt/gate/deck-plugins
-RUN true
-COPY install/local-plugin-repo /opt/gate/local-plugin-repo
+
+
+## -- Install gate --
+#COPY install/gate /opt/gate
+#
+#RUN mkdir -p /opt/gate/plugins && chown -R spinnaker:spinnaker /opt/gate/plugins && \
+#  mkdir -p /opt/gate/deck-plugins && chown -R spinnaker:spinnaker /opt/gate/deck-plugins && \
+#  mkdir -p /opt/gate/local-plugin-repo && chown -R spinnaker:spinnaker /opt/gate/local-plugin-repo
+#
+### Bake plugins
+### COPY true is due to this issue: https://github.com/moby/moby/issues/37965
+#COPY install/plugins /opt/gate/plugins
+#RUN true
+#COPY install/deck-plugins /opt/gate/deck-plugins
+#RUN true
+#COPY install/local-plugin-repo /opt/gate/local-plugin-repo
 
 # Copy Superviosrd configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf

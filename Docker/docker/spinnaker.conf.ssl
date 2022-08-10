@@ -1,0 +1,41 @@
+LoadModule ssl_module mod_ssl.so
+LoadModule socache_shmcb_module mod_socache_shmcb.so
+
+SSLRandomSeed startup file:/dev/urandom 512
+SSLRandomSeed connect builtin
+
+SSLCipherSuite HIGH:MEDIUM:!MD5:!RC4:!3DES:!ADH
+SSLProxyCipherSuite HIGH:MEDIUM:!MD5:!RC4:!3DES:!ADH
+
+SSLHonorCipherOrder on
+SSLProtocol all -SSLv3
+SSLProxyProtocol all -SSLv3
+SSLSessionCache        "shmcb:/var/cache/mod_ssl/scache(512000)"
+SSLSessionCacheTimeout  300
+
+SSLPassPhraseDialog exec:/etc/apache2/passphrase
+Listen {%DECK_HOST%}:{%DECK_PORT%}
+
+<VirtualHost {%DECK_HOST%}:{%DECK_PORT%}>
+  SSLEngine on
+  SSLCertificateFile "{%DECK_CERT_PATH%}"
+  SSLCertificateKeyFile "{%DECK_KEY_PATH%}"
+
+  DocumentRoot /opt/deck/html
+
+  ProxyPass "/gate" "{%API_HOST%}" retry=0
+  ProxyPassReverse "/gate" "{%API_HOST%}"
+
+  ErrorLog /dev/stderr
+  TransferLog /dev/stdout
+
+  <Directory "/opt/deck/html/">
+    Require all granted
+    <FilesMatch ".+\.([a-z0-9]+)\.(js|woff|woff2|eot|ttf|svg|png|gif)">
+      <IfModule mod_expires.c>
+        ExpiresActive on
+        ExpiresDefault "access plus 1 month"
+      </IfModule>
+    </FilesMatch>
+  </Directory>
+</VirtualHost>
