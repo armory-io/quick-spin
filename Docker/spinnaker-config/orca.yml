@@ -1,0 +1,22 @@
+integrations:
+  gremlin:
+    baseUrl: https://api.gremlin.com/v1
+    enabled: false
+pipelineTemplate.enabled: false
+pipelineTemplates.enabled: false
+server:
+  address: ${services.orca.host:localhost}
+  port: ${services.orca.port:8083}
+spectator:
+  applicationName: ${spring.application.name}
+  webEndpoint:
+    enabled: false
+spinnaker:
+  extensibility:
+    plugins: {}
+    plugins-root-path: /opt/orca/plugins
+    repositories: {}
+    strict-plugin-loading: false
+webhook:
+  trust:
+    enabled: false

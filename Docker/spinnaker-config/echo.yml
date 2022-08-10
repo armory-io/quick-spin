@@ -1,0 +1,79 @@
+artifacts:
+  bitbucket:
+    accounts: []
+    enabled: false
+  gcs:
+    accounts: []
+    enabled: false
+  github:
+    accounts: []
+    enabled: false
+  gitlab:
+    accounts: []
+    enabled: false
+  gitrepo:
+    accounts: []
+    enabled: false
+  helm:
+    accounts: []
+    enabled: false
+  http:
+    accounts: []
+    enabled: false
+  maven:
+    accounts: []
+    enabled: false
+  oracle:
+    accounts: []
+    enabled: false
+  s3:
+    accounts: []
+    enabled: false
+  templates: []
+diagnostics.enabled: true
+diagnostics.id: armory-quick-spin-install
+gcb:
+  accounts: []
+  enabled: false
+github-status:
+  enabled: false
+global.spinnaker.timezone: America/Los_Angeles
+pubsub:
+  enabled: false
+  google:
+    enabled: false
+    publishers: []
+    pubsubType: GOOGLE
+    subscriptions: []
+rest.enabled: true
+server:
+  address: ${services.echo.host:localhost}
+  port: ${services.echo.port:8089}
+slack:
+  enabled: false
+spectator:
+  applicationName: ${spring.application.name}
+  webEndpoint:
+    enabled: false
+spinnaker:
+  extensibility:
+    plugins: {}
+    plugins-root-path: /opt/echo/plugins
+    repositories: {}
+    strict-plugin-loading: false
+spinnaker.baseUrl: http://localhost:9000
+stats:
+  connectionTimeoutMillis: 3000
+  deploymentMethod:
+    type: kubernetes_operator
+    version: ""
+  enabled: true
+  endpoint: https://stats.spinnaker.io
+  instanceId: armory-quick-spin-install
+  readTimeoutMillis: 5000
+  spinnakerVersion: custom
+stats.deploymentMethod.type: halyard
+stats.deploymentMethod.version: operator-70c2a04
+twilio:
+  baseUrl: https://api.twilio.com/
+  enabled: false

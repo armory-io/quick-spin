@@ -1,0 +1,4 @@
+archaius:
+  fixedDelayPollingScheduler:
+    delayMills: 2147483647
+    initialDelayMills: 2147483647

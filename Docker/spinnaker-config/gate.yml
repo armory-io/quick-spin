@@ -1,0 +1,27 @@
+armory:
+  registrationId: armory-quick-spin-install
+cors: {}
+google: {}
+integrations:
+  gremlin:
+    baseUrl: https://api.gremlin.com/v1
+    enabled: false
+security:
+  basic:
+    enabled: true
+  user: {}
+server:
+  address: 0.0.0.0
+  port: "8084"
+  ssl:
+    enabled: false
+spectator:
+  applicationName: ${spring.application.name}
+  webEndpoint:
+    enabled: false
+spinnaker:
+  extensibility:
+    plugins: {}
+    plugins-root-path: /opt/gate/plugins
+    repositories: {}
+    strict-plugin-loading: false

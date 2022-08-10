@@ -123,6 +123,9 @@ RUN mv -f $JAVA_HOME/lib/security/cacerts /etc/ssl/certs/java/cacerts
 RUN ln -sf /etc/ssl/certs/java/cacerts $JAVA_HOME/lib/security/cacerts
 RUN chown -R spinnaker:spinnaker /opt/echo/plugins
 
+COPY spinnaker-config /opt/spinnaker/config
+
+RUN chown -R spinnaker:spinnaker /opt/spinnaker/config
 # Initialize MariaDB
 RUN   mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 RUN   chown -R mysql:mysql /var/lib/mysql

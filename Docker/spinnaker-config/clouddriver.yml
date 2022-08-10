@@ -1,0 +1,126 @@
+appengine:
+  accounts: []
+  enabled: false
+artifacts:
+  bitbucket:
+    accounts: []
+    enabled: false
+  gcs:
+    accounts: []
+    enabled: false
+  github:
+    accounts: []
+    enabled: false
+  gitlab:
+    accounts: []
+    enabled: false
+  gitrepo:
+    accounts: []
+    enabled: false
+  helm:
+    accounts: []
+    enabled: false
+  http:
+    accounts: []
+    enabled: false
+  maven:
+    accounts: []
+    enabled: false
+  oracle:
+    accounts: []
+    enabled: false
+  s3:
+    accounts: []
+    enabled: false
+  templates: []
+aws:
+  accounts: []
+  bakeryDefaults:
+    baseImages: []
+  defaultKeyPairTemplate: '{{name}}-keypair'
+  defaultRegions:
+  - name: us-west-2
+  defaults:
+    iamRole: BaseIAMRole
+  enabled: false
+azure:
+  accounts: []
+  bakeryDefaults:
+    baseImages: []
+    templateFile: azure-linux.json
+  enabled: false
+cloudfoundry:
+  accounts: []
+  enabled: false
+dcos:
+  accounts: []
+  clusters: []
+  enabled: false
+dockerRegistry:
+  accounts: []
+  enabled: false
+ecs:
+  accounts: []
+  enabled: false
+google:
+  accounts: []
+  bakeryDefaults:
+    baseImages: []
+    network: default
+    templateFile: gce.json
+    useInternalIp: false
+    zone: us-central1-f
+  enabled: false
+huaweicloud:
+  accounts: []
+  bakeryDefaults:
+    baseImages: []
+  enabled: false
+kubernetes:
+  accounts:
+  - cacheThreads: 1
+    cachingPolicies: []
+    checkPermissionsOnStartup: true
+    customResources: []
+    dockerRegistries: []
+    kinds: []
+    liveManifestCalls: false
+    name: spinnaker
+    namespaces: []
+    oAuthScopes: []
+    omitKinds: []
+    omitNamespaces: []
+    onlySpinnakerManaged: false
+    permissions: {}
+    providerVersion: V2
+    rawResourcesEndpointConfig: {}
+    requiredGroupMembership: []
+    serviceAccount: true
+  enabled: true
+  primaryAccount: spinnaker
+oracle:
+  accounts: []
+  bakeryDefaults:
+    baseImages: []
+    templateFile: oci.json
+  enabled: false
+server:
+  address: ${services.clouddriver.host:localhost}
+  port: ${services.clouddriver.port:7002}
+spectator:
+  applicationName: ${spring.application.name}
+  webEndpoint:
+    enabled: false
+spinnaker:
+  extensibility:
+    plugins: {}
+    plugins-root-path: /opt/clouddriver/plugins
+    repositories: {}
+    strict-plugin-loading: false
+tencentcloud:
+  accounts: []
+  bakeryDefaults:
+    baseImages: []
+  enabled: false
+udf.defaultLegacyUdf: false
+udf.udfRoot: /opt/clouddriver/config/udf
