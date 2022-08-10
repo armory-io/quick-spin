@@ -1,6 +1,7 @@
 FROM python:3.7-alpine3.16
 MAINTAINER engineering@armory.io
 
+ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 ENV KUBECTL_RELEASE=1.20.6
 ENV AWS_CLI_VERSION=1.21.2
 ## https://github.com/kubernetes-sigs/aws-iam-authenticator/releases
@@ -11,19 +12,21 @@ ENV GOOGLE_CLOUD_SDK_VERSION=396.0.0
 ENV ECR_TOKEN_VERSION=v1.0.2
 ENV PATH "$PATH:/usr/local/bin/:/opt/google-cloud-sdk/bin/:/usr/local/bin/aws-iam-authenticator:/opt/ecr-token"
 
-# Clouddriver requirements
 RUN apk update \
-  && apk upgrade \
-  && apk --no-cache add --update \
-    bash \
-    ca-certificates \
-    wget \
-    openjdk11 \
-    git \
-    supervisor
+  && apk upgrade
 
+RUN apk --no-cache add --update \
+# Clouddriver requirements
+  bash \
+  ca-certificates \
+  wget \
+  openjdk11 \
+  git \
+  supervisor \
+# mysql requirements    
+  mysql \
+  mysql-client \
 # Deck requirements
-RUN apk --no-cache --update add \
   apache2 \
   apache2-ctl \
   apache2-http2 \
@@ -31,12 +34,12 @@ RUN apk --no-cache --update add \
   apache2-ssl \
   apache2-utils \
   libxml2-dev \
-  && true
-
 # Gate requirements
-RUN apk --nocache add --update \
   bash \
-  openssl
+  openssl \
+# Orca requirements
+  java-cacerts \
+  && true
 
 # AWS CLI
 RUN pip install --upgrade awscli==${AWS_CLI_VERSION} s3cmd==2.0.1 python-magic \
@@ -56,8 +59,8 @@ RUN wget https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_RE
   && chmod +x kubectl \
   && mv ./kubectl /usr/local/bin/kubectl \
   && wget -O aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_AIM_AUTHENTICATOR_VERSION}/aws-iam-authenticator_${AWS_AIM_AUTHENTICATOR_VERSION}_linux_amd64 \
-	&& chmod +x ./aws-iam-authenticator \
-	&& mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
+  && chmod +x ./aws-iam-authenticator \
+  && mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
 
 # Install a simple cli to get ecr token
 RUN wget -nv https://github.com/armory/ecr-token/releases/download/${ECR_TOKEN_VERSION}/ecr-token_${ECR_TOKEN_VERSION}_linux_amd64.tar.gz \
@@ -66,21 +69,23 @@ RUN wget -nv https://github.com/armory/ecr-token/releases/download/${ECR_TOKEN_V
   && chmod +x ./ecr-token \
   && rm /ecr-token_${ECR_TOKEN_VERSION}_linux_amd64.tar.gz
 
+
+RUN rm -rf /var/cache/apk/* && \
+  wget -P /usr/local/share/ca-certificates/ https://s3.amazonaws.com/rds-downloads/rds-ca-2015-root.pem && \
+  wget -P /usr/local/share/ca-certificates/ https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem && \
+  update-ca-certificates && \
+  ln -sf /etc/ssl/certs/java/cacerts /usr/lib/jvm/default-jvm/jre/lib/security/cacerts
+
 # -- Install clouddriver --
-COPY install/clouddriver /opt/clouddriver
+COPY --from=armory/clouddriver-armory:2022.08.03.03.46.46.release-2.28.x /opt/clouddriver /opt/clouddriver
 
-RUN adduser -D spinnaker \
-  && addgroup spinnaker spinnaker \
-  && mkdir -p /opt/clouddriver/plugins \
-  && chown -R spinnaker:spinnaker /opt/clouddriver/plugins
-
-## Bake plugins
-COPY install/plugins /opt/clouddriver/plugins
+RUN adduser -D spinnaker
+RUN addgroup spinnaker spinnaker
+RUN chown -R spinnaker:spinnaker /opt/clouddriver/plugins
 
 # -- Install deck --
-#COPY install/deck-build/dist /opt/deck/html/
 
-COPY install/deck-docker /opt/deck/bin
+COPY --from=armory/deck-armory:2022.07.14.16.52.46.release-2.28.x /opt/deck /opt/deck
 
 WORKDIR /opt/deck
 
@@ -91,22 +96,39 @@ RUN bin/setup-apache2.sh
 RUN chown -R www-data:www-data /opt/deck
 
 # -- Install gate --
-COPY install/gate /opt/gate
+COPY --from=armory/gate-armory:2022.08.03.03.23.19.release-2.28.x /opt/gate /opt/gate
 
-RUN mkdir -p /opt/gate/plugins && chown -R spinnaker:spinnaker /opt/gate/plugins && \
-  mkdir -p /opt/gate/deck-plugins && chown -R spinnaker:spinnaker /opt/gate/deck-plugins && \
-  mkdir -p /opt/gate/local-plugin-repo && chown -R spinnaker:spinnaker /opt/gate/local-plugin-repo
+RUN chown -R spinnaker:spinnaker /opt/gate/plugins && \
+    chown -R spinnaker:spinnaker /opt/gate/deck-plugins && \
+    chown -R spinnaker:spinnaker /opt/gate/local-plugin-repo
 
-## Bake plugins
-## COPY true is due to this issue: https://github.com/moby/moby/issues/37965
-COPY install/plugins /opt/gate/plugins
-RUN true
-COPY install/deck-plugins /opt/gate/deck-plugins
-RUN true
-COPY install/local-plugin-repo /opt/gate/local-plugin-repo
+# -- Install orca --
 
+COPY --from=armory/orca-armory:2022.08.03.03.33.08.release-2.28.x /opt/orca /opt/orca
+
+RUN chown -R spinnaker:spinnaker /opt/orca/plugins
+
+# -- Install front50 --
+
+COPY --from=armory/front50-armory:2022.08.03.21.55.44.release-2.28.x /opt/front50 /opt/front50
+
+RUN chown -R spinnaker:spinnaker /opt/front50/plugins
+
+
+# -- Install echo --
+COPY --from=armory/echo-armory:2022.08.03.03.22.30.release-2.28.x /opt/echo /opt/echo
+
+RUN mkdir -p /etc/ssl/certs/java
+RUN mv -f $JAVA_HOME/lib/security/cacerts /etc/ssl/certs/java/cacerts
+RUN ln -sf /etc/ssl/certs/java/cacerts $JAVA_HOME/lib/security/cacerts
+RUN chown -R spinnaker:spinnaker /opt/echo/plugins
+
+# -- Supervisor D --
 # Copy Superviosrd configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Initialize MariaDB
+#RUN /etc/init.d/mariadb setup
 
 WORKDIR /home/spinnaker
 
