@@ -1,0 +1,30 @@
+server:
+  address: ${services.front50.host:localhost}
+  port: ${services.front50.port:8080}
+spectator:
+  applicationName: ${spring.application.name}
+  webEndpoint:
+    enabled: false
+spinnaker:
+  azs:
+    enabled: false
+  extensibility:
+    plugins: {}
+    plugins-root-path: /opt/front50/plugins
+    repositories: {}
+    strict-plugin-loading: false
+  gcs:
+    bucketLocation: ""
+    enabled: false
+    rootFolder: front50
+  oracle:
+    enabled: false
+  redis:
+    enabled: false
+    host: ${services.redis.host:localhost}
+    port: 6379
+  s3:
+    bucket: armory-quick-spin-install
+    enabled: false
+    region: us-west-2
+    rootFolder: front50
