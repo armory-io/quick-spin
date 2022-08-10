@@ -123,12 +123,14 @@ RUN mv -f $JAVA_HOME/lib/security/cacerts /etc/ssl/certs/java/cacerts
 RUN ln -sf /etc/ssl/certs/java/cacerts $JAVA_HOME/lib/security/cacerts
 RUN chown -R spinnaker:spinnaker /opt/echo/plugins
 
+# Initialize MariaDB
+RUN   mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
+RUN   chown -R mysql:mysql /var/lib/mysql
+RUN   mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
+
 # -- Supervisor D --
 # Copy Superviosrd configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Initialize MariaDB
-#RUN /etc/init.d/mariadb setup
 
 WORKDIR /home/spinnaker
 
