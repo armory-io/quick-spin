@@ -1,0 +1,13 @@
+server:
+  address: ${services.fiat.host:localhost}
+  port: ${services.fiat.port:7003}
+spectator:
+  applicationName: ${spring.application.name}
+  webEndpoint:
+    enabled: false
+spinnaker:
+  extensibility:
+    plugins: {}
+    plugins-root-path: /opt/fiat/plugins
+    repositories: {}
+    strict-plugin-loading: false

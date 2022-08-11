@@ -126,10 +126,15 @@ RUN chown -R spinnaker:spinnaker /opt/echo/plugins
 COPY spinnaker-config /opt/spinnaker/config
 
 RUN chown -R spinnaker:spinnaker /opt/spinnaker/config
-# Initialize MariaDB
-RUN   mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
-RUN   chown -R mysql:mysql /var/lib/mysql
-RUN   mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
+
+# Install Mysql
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
+RUN chown -R mysql:mysql /var/lib/mysql
+RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
+
+# Initialize Mysql
+COPY init.sql /opt/spinnaker/init.sql
+RUN (/usr/bin/mysqld_safe &) ; sleep 3 ; /usr/bin/mysql -u root < /opt/spinnaker/init.sql
 
 # -- Supervisor D --
 # Copy Superviosrd configuration

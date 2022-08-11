@@ -9,11 +9,11 @@ sql:
   connectionPools:
     default:
       default: true
-      jdbcUrl: jdbc:mysql://localhost:3306/front50
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/front50?useSSL=false&useUnicode=true&characterEncoding=utf8
       password: password
       user: front50_service
   enabled: true
   migration:
-    jdbcUrl: jdbc:mysql://localhost:3306/front50
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/front50?useSSL=false&useUnicode=true&characterEncoding=utf8
     password: password
     user: front50_migrate
