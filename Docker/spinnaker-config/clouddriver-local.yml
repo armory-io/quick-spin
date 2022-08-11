@@ -2,3 +2,37 @@ archaius:
   fixedDelayPollingScheduler:
     delayMills: 2147483647
     initialDelayMills: 2147483647
+
+sql:
+  enabled: true
+  cache:
+    enabled: true
+    readBatchSize: 500
+    writeBatchSize: 300
+  scheduler:
+    enabled: true
+  taskRepository:
+    enabled: true
+  connectionPools:
+    default:
+      default: true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/clouddriver?useSSL=false&useUnicode=true&characterEncoding=utf8
+      password: password
+      user: clouddriver_service
+    tasks:
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/clouddriver?useSSL=false&useUnicode=true&characterEncoding=utf8
+      password: password
+      user: clouddriver_service
+  migration:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/clouddriver?useSSL=false&useUnicode=true&characterEncoding=utf8
+    password: password
+    user: clouddriver_migrate
+
+redis:
+  enabled: false
+  cache:
+    enabled: false
+  scheduler:
+    enabled: false
+  taskRepository:
+    enabled: false

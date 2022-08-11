@@ -2,3 +2,42 @@ archaius:
   fixedDelayPollingScheduler:
     delayMills: 2147483647
     initialDelayMills: 2147483647
+
+sql:
+  enabled: true
+  connectionPools:
+    default:
+      default: true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/orca?useSSL=false&useUnicode=true&characterEncoding=utf8
+      password: password
+      user: orca_service
+  migration:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/orca?useSSL=false&useUnicode=true&characterEncoding=utf8
+    password: password
+    user: orca_migrate
+
+executionRepository:
+  sql:
+    enabled: true
+  redis:
+    enabled: false
+
+monitor:
+  activeExecutions:
+    redis: false
+
+keiko:
+  queue:
+    sql:
+      enabled: true
+    redis:
+      enabled: false
+
+queue:
+  zombieCheck:
+    enabled: true
+  pendingExecutionService:
+    sql:
+      enabled: true
+    redis:
+      enabled: false
