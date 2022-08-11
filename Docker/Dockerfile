@@ -139,8 +139,11 @@ RUN (/usr/bin/mysqld_safe &) ; sleep 3 ; /usr/bin/mysql -u root < /opt/spinnaker
 # -- Supervisor D --
 # Copy Superviosrd configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY supervisord.conf /etc/supervisord.conf
 
 WORKDIR /home/spinnaker
+
+EXPOSE 8084 9000 
 
 # Run Supervisord
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
