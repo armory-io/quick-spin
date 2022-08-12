@@ -134,9 +134,7 @@ RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
 
 # Initialize Mysql
 COPY init.sql /opt/spinnaker/init.sql
-COPY front50-init.sql /opt/spinnaker/front50.sql
 RUN (/usr/bin/mysqld_safe &) ; sleep 3 ; /usr/bin/mysql -u root < /opt/spinnaker/init.sql
-RUN (/usr/bin/mysqld_safe &) ; sleep 3 ; /usr/bin/mysql -u root < /opt/spinnaker/front50.sql
 
 # -- Supervisor D --
 # Copy Superviosrd configuration
