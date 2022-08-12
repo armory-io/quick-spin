@@ -1,3 +1,4 @@
+logging.config: /opt/spinnaker/config/logback.xml
 server:
   address: ${services.front50.host:localhost}
   port: ${services.front50.port:8080}
