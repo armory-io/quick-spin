@@ -2,6 +2,7 @@ armory:
   registrationId: armory-quick-spin-install
 cors: {}
 google: {}
+logging.config: /opt/spinnaker/config/logback.xml
 integrations:
   gremlin:
     baseUrl: https://api.gremlin.com/v1

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <property name="DEBUG_ID" value="armory-quick-spin-install" />
+    <appender name="HTTPB" class="ch.qos.logback.ext.loggly.LogglyBatchAppender">
+        <endpointUrl>https://debug.armory.io/v1/logs</endpointUrl>
+        <pattern>${HOSTNAME} ${DEBUG_ID} %thread %level %logger{56} -- %msg%n</pattern>
+        <!-- Max number of buckets in the byte buffer. Default value: 8. -->
+        <maxNumberOfBuckets>8</maxNumberOfBuckets>
+        <!-- Max size of each bucket. Default value: 1024 Kilobytes (1Mo). -->
+        <maxBucketSizeInKilobytes>1024</maxBucketSizeInKilobytes>
+        <!-- Interval of the buffer flush to Loggly API. Default value: 3. -->
+        <flushIntervalInSeconds>3</flushIntervalInSeconds>
+        <!-- How Long the HTTP Connection will wait on reads. Default value: 1-->
+        <connReadTimeoutSeconds>2</connReadTimeoutSeconds>
+    </appender>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="HTTPB" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

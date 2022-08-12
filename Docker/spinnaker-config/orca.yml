@@ -2,6 +2,7 @@ integrations:
   gremlin:
     baseUrl: https://api.gremlin.com/v1
     enabled: false
+logging.config: /opt/spinnaker/config/logback.xml
 pipelineTemplate.enabled: false
 pipelineTemplates.enabled: false
 server:
