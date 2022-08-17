@@ -23,16 +23,11 @@ RUN apk --no-cache add --update \
   openjdk11 \
   git \
   supervisor \
-# mysql requirements    
+# mysql requirements
   mysql \
   mysql-client \
 # Deck requirements
-  apache2 \
-  apache2-ctl \
-  apache2-http2 \
-  apache2-proxy \
-  apache2-ssl \
-  apache2-utils \
+  nginx \
   libxml2-dev \
 # Gate requirements
   bash \
@@ -85,13 +80,13 @@ RUN chown -R spinnaker:spinnaker /opt/clouddriver/plugins
 
 # -- Install deck --
 
-COPY --from=armory/deck-armory:2022.07.14.16.52.46.release-2.28.x /opt/deck /opt/deck
+COPY --from=armory/deck-armory:2022.07.14.16.52.46.release-2.28.x /opt/deck/html  /opt/deck/html
+
+COPY spinnaker-config/settings.js /opt/deck/html
 
 WORKDIR /opt/deck
 
 RUN adduser -D -G www-data www-data
-
-RUN bin/setup-apache2.sh
 
 RUN chown -R www-data:www-data /opt/deck
 
@@ -145,9 +140,12 @@ RUN (/usr/bin/mysqld_safe &) ; sleep 3 ; /usr/bin/mysql -u root < /opt/spinnaker
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY supervisord.conf /etc/supervisord.conf
 
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
 WORKDIR /home/spinnaker
 
-EXPOSE 8084 9000 
+EXPOSE 80
 
 # Run Supervisord
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
