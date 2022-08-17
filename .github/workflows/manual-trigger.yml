@@ -1,0 +1,20 @@
+name: build docker image manually
+
+on:
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: 'Docker platforms'
+        required: false
+        default: 'linux/amd64,linux/arm64'
+      tags:
+        description: 'Docker tags'
+        required: true
+
+jobs:
+  call-build-docker:
+    uses: ./.github/workflows/build-docker.yml
+    with:
+      platforms: ${{ github.event.inputs.platforms }}
+      tags: ${{ github.event.inputs.tags }}
+    secrets: inherit
