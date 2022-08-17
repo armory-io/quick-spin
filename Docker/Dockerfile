@@ -111,7 +111,11 @@ RUN chown -R spinnaker:spinnaker /opt/orca/plugins
 # -- Install front50 --
 
 COPY --from=armory/front50-armory:2022.08.03.21.55.44.release-2.28.x /opt/front50 /opt/front50
-
+# Create a directory that matches liquibase changelog path
+RUN mkdir -p /db/changelog
+COPY db/front50/changelog/default-app-and-pipeline.yml /db/changelog/default-app-and-pipeline.yml
+# Add changelog to existing jar so it's available on classpath
+RUN jar uf /opt/front50/lib/front50-sql-2022.08.02.17.26.34.release-1.28.x.jar  /db/changelog/default-app-and-pipeline.yml
 RUN chown -R spinnaker:spinnaker /opt/front50/plugins
 
 

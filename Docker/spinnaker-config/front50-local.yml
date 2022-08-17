@@ -17,3 +17,5 @@ sql:
     jdbcUrl: jdbc:mysql://127.0.0.1:3306/front50?useSSL=false&useUnicode=true&characterEncoding=utf8
     password: password
     user: front50_migrate
+    additionalChangeLogs:
+      - /db/changelog/default-app-and-pipeline.yml

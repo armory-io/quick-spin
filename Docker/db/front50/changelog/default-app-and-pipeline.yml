@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-plugin-versions-table
+      author: chris.kotula@armory.io
+      changes:
+        - insert:
+            tableName: applications
+            columns:
+              - column:
+                  name: id
+                  value: 'test application'
+              - column:
+                  name: body
+                  value: '{"name":"test application","description":"enteradescription","email":"chris.kotula@armory.io","updateTs":"1660301379020","createTs":null,"lastModifiedBy":"anonymous","cloudProviders":"kubernetes","trafficGuards":[],"instancePort":80,"repoSlug":"projectname","repoType":"github","repoProjectKey":"projectname","user":"[anonymous]"}'
+              - column:
+                  name: created_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_by
+                  value: chris.kotula@armory.io
+        - insert:
+            tableName: pipelines
+            columns:
+              - column:
+                  name: id
+                  value: 15168498-253c-4045-a2b1-f567b93d6cec
+              - column:
+                  name: name
+                  value: 'simple pipeline 1'
+              - column:
+                  name: application
+                  value: 'test application'
+              - column:
+                  name: body
+                  value: '{"id":"15168498-253c-4045-a2b1-f567b93d6cec","name":"simple pipeline 1","application":"test application","schema":"1","triggers":[],"index":0,"lastModifiedBy":"anonymous","stages":[{"name":"Wait","refId":"1","requisiteStageRefIds":[],"type":"wait","waitTime":30}],"keepWaitingPipelines":false,"limitConcurrent":true,"spelEvaluator":"v4"}'
+              - column:
+                  name: created_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_by
+                  value: 'chris.kotula@armory.io'
+
