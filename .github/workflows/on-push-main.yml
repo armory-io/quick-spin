@@ -1,0 +1,14 @@
+name: build docker image main
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  call-build-docker:
+    uses: ./.github/workflows/build-docker.yml
+    with:
+      platforms: 'linux/amd64,linux/arm64'
+      tags: 'armory/quick-spin:latest, armory/quick-spin:${{ github.sha }}'
+    secrets: inherit
