@@ -12,6 +12,13 @@ security:
     enabled: true
   user: {}
 server:
+  servlet:
+    context-path: /api/v1
+  tomcat:
+    httpsServerPort: X-Forwarded-Port
+    internalProxies: .*
+    protocolHeader: X-Forwarded-Proto
+    remoteIpHeader: X-Forwarded-For
   address: 0.0.0.0
   port: "8084"
   ssl:

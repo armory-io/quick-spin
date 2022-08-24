@@ -62,7 +62,7 @@ spinnaker:
     plugins-root-path: /opt/echo/plugins
     repositories: {}
     strict-plugin-loading: false
-spinnaker.baseUrl: http://localhost:9000
+spinnaker.baseUrl: http://localhost:80
 stats:
   connectionTimeoutMillis: 3000
   deploymentMethod:

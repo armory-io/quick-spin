@@ -4,7 +4,7 @@
 
 'use strict';
 
-var gateHost = 'http://localhost:9000/api/v1';
+var gateHost = 'http://localhost:80/api/v1';
 var atlasWebComponentsUrl = '';
 var authEnabled = 'false' === 'true';
 var authEndpoint = gateHost + '/auth/user';
