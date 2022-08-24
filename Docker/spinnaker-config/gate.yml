@@ -26,3 +26,8 @@ spinnaker:
     plugins-root-path: /opt/gate/plugins
     repositories: {}
     strict-plugin-loading: false
+    deck-proxy:
+      enabled: true
+      plugins:
+        Armory.ArmoryHeader:
+          enabled: true
