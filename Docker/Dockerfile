@@ -83,6 +83,7 @@ RUN chown -R spinnaker:spinnaker /opt/clouddriver/plugins
 COPY --from=armory/deck-armory:2022.07.14.16.52.46.release-2.28.x /opt/deck/html  /opt/deck/html
 
 COPY spinnaker-config/settings.js /opt/deck/html
+COPY spinnaker-config/plugin-manifest.json /opt/deck/html
 
 WORKDIR /opt/deck
 
