@@ -1,40 +1,45 @@
 FROM python:3.7-alpine3.16
 MAINTAINER engineering@armory.io
 
-ENV JAVA_HOME=/usr/lib/jvm/default-jvm
-ENV KUBECTL_RELEASE=1.20.6
-ENV AWS_CLI_VERSION=1.21.2
+ENV JAVA_HOME=/usr/lib/jvm/default-jvm \
+    KUBECTL_RELEASE=1.20.6 \
+    AWS_CLI_VERSION=1.21.2 \
 ## https://github.com/kubernetes-sigs/aws-iam-authenticator/releases
-ENV AWS_AIM_AUTHENTICATOR_VERSION=0.5.9
+    AWS_AIM_AUTHENTICATOR_VERSION=0.5.9 \
 # See https://cloud.google.com/sdk/docs/release-notes
 # and https://cloud.google.com/appengine/docs/standard/java/release-notes
-ENV GOOGLE_CLOUD_SDK_VERSION=396.0.0
-ENV ECR_TOKEN_VERSION=v1.0.2
+    GOOGLE_CLOUD_SDK_VERSION=396.0.0 \
+    ECR_TOKEN_VERSION=v1.0.2
+    
 ENV PATH "$PATH:/usr/local/bin/:/opt/google-cloud-sdk/bin/:/usr/local/bin/aws-iam-authenticator:/opt/ecr-token"
 
-RUN apk update \
-  && apk upgrade
-
-RUN apk --no-cache add --update \
+RUN apk update && \
+    apk upgrade && \
+    apk --no-cache add --update \
 # Clouddriver requirements
-  bash \
-  ca-certificates \
-  wget \
-  openjdk11 \
-  git \
-  supervisor \
+    bash \
+    ca-certificates \
+    wget \
+    openjdk11 \
+    git \
+    supervisor \
 # mysql requirements
-  mysql \
-  mysql-client \
-# Deck requirements
-  nginx \
-  libxml2-dev \
+    mysql \
+    mysql-client \
+#   Deck requirements
+    nginx \
+    libxml2-dev \
 # Gate requirements
-  bash \
-  openssl \
+    bash \
+    openssl \
 # Orca requirements
-  java-cacerts \
-  && true
+    java-cacerts && \
+    true
+
+# User and group creation
+RUN adduser -D spinnaker && \
+    addgroup spinnaker spinnaker && \
+    adduser -D -G www-data www-data
 
 # AWS CLI
 RUN pip install --upgrade awscli==${AWS_CLI_VERSION} s3cmd==2.0.1 python-magic \
@@ -64,7 +69,6 @@ RUN wget -nv https://github.com/armory/ecr-token/releases/download/${ECR_TOKEN_V
   && chmod +x ./ecr-token \
   && rm /ecr-token_${ECR_TOKEN_VERSION}_linux_amd64.tar.gz
 
-
 RUN rm -rf /var/cache/apk/* && \
   wget -P /usr/local/share/ca-certificates/ https://s3.amazonaws.com/rds-downloads/rds-ca-2015-root.pem && \
   wget -P /usr/local/share/ca-certificates/ https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem && \
@@ -74,35 +78,18 @@ RUN rm -rf /var/cache/apk/* && \
 # -- Install clouddriver --
 COPY --from=armory/clouddriver-armory:2022.08.03.03.46.46.release-2.28.x /opt/clouddriver /opt/clouddriver
 
-RUN adduser -D spinnaker
-RUN addgroup spinnaker spinnaker
-RUN chown -R spinnaker:spinnaker /opt/clouddriver/plugins
-
 # -- Install deck --
 
 COPY --from=armory/deck-armory:2022.07.14.16.52.46.release-2.28.x /opt/deck/html  /opt/deck/html
 
-COPY spinnaker-config/settings.js /opt/deck/html
-COPY spinnaker-config/plugin-manifest.json /opt/deck/html
-
-WORKDIR /opt/deck
-
-RUN adduser -D -G www-data www-data
-
-RUN chown -R www-data:www-data /opt/deck
+COPY spinnaker-config/settings.js spinnaker-config/plugin-manifest.json /opt/deck/html
 
 # -- Install gate --
 COPY --from=armory/gate-armory:2022.08.03.03.23.19.release-2.28.x /opt/gate /opt/gate
 
-RUN chown -R spinnaker:spinnaker /opt/gate/plugins && \
-    chown -R spinnaker:spinnaker /opt/gate/deck-plugins && \
-    chown -R spinnaker:spinnaker /opt/gate/local-plugin-repo
-
 # -- Install orca --
 
 COPY --from=armory/orca-armory:2022.08.03.03.33.08.release-2.28.x /opt/orca /opt/orca
-
-RUN chown -R spinnaker:spinnaker /opt/orca/plugins
 
 # -- Install front50 --
 
@@ -112,13 +99,11 @@ RUN mkdir -p /db/changelog
 COPY db/front50/changelog/default-app-and-pipeline.yml /db/changelog/default-app-and-pipeline.yml
 # Add changelog to existing jar so it's available on classpath
 RUN jar uf /opt/front50/lib/front50-sql-2022.08.02.17.26.34.release-1.28.x.jar  /db/changelog/default-app-and-pipeline.yml
-RUN chown -R spinnaker:spinnaker /opt/front50/plugins
 
 
 # -- Install echo --
 COPY --from=armory/echo-armory:2022.08.03.03.22.30.release-2.28.x /opt/echo /opt/echo
 COPY spinnaker-config /opt/spinnaker/config
-RUN chown -R spinnaker:spinnaker /opt/spinnaker/config
 
 # Install Mysql
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
@@ -128,6 +113,16 @@ RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
 # Initialize Mysql
 COPY init.sql /opt/spinnaker/init.sql
 RUN (/usr/bin/mysqld_safe &) ; sleep 3 ; /usr/bin/mysql -u root < /opt/spinnaker/init.sql
+
+# Ownerships
+RUN chown -R spinnaker:spinnaker /opt/clouddriver/plugins && \
+    chown -R spinnaker:spinnaker /opt/gate/plugins && \
+    chown -R spinnaker:spinnaker /opt/gate/deck-plugins && \
+    chown -R spinnaker:spinnaker /opt/gate/local-plugin-repo && \
+    chown -R spinnaker:spinnaker /opt/front50/plugins && \
+    chown -R spinnaker:spinnaker /opt/orca/plugins && \
+    chown -R spinnaker:spinnaker /opt/spinnaker/config && \
+    chown -R www-data:www-data /opt/deck
 
 # -- Supervisor D --
 # Copy Superviosrd configuration
