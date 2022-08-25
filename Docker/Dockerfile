@@ -117,14 +117,7 @@ RUN chown -R spinnaker:spinnaker /opt/front50/plugins
 
 # -- Install echo --
 COPY --from=armory/echo-armory:2022.08.03.03.22.30.release-2.28.x /opt/echo /opt/echo
-
-RUN mkdir -p /etc/ssl/certs/java
-RUN mv -f $JAVA_HOME/lib/security/cacerts /etc/ssl/certs/java/cacerts
-RUN ln -sf /etc/ssl/certs/java/cacerts $JAVA_HOME/lib/security/cacerts
-RUN chown -R spinnaker:spinnaker /opt/echo/plugins
-
 COPY spinnaker-config /opt/spinnaker/config
-
 RUN chown -R spinnaker:spinnaker /opt/spinnaker/config
 
 # Install Mysql
