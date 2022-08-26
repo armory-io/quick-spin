@@ -10,7 +10,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-jvm \
 # and https://cloud.google.com/appengine/docs/standard/java/release-notes
     GOOGLE_CLOUD_SDK_VERSION=396.0.0 \
     ECR_TOKEN_VERSION=v1.0.2
-    
+
 ENV PATH "$PATH:/usr/local/bin/:/opt/google-cloud-sdk/bin/:/usr/local/bin/aws-iam-authenticator:/opt/ecr-token"
 
 RUN apk update && \
@@ -82,10 +82,18 @@ COPY --from=armory/clouddriver-armory:2022.08.03.03.46.46.release-2.28.x /opt/cl
 
 COPY --from=armory/deck-armory:2022.07.14.16.52.46.release-2.28.x /opt/deck/html  /opt/deck/html
 
-COPY spinnaker-config/settings.js spinnaker-config/plugin-manifest.json /opt/deck/html
+COPY spinnaker-config/settings.js spinnaker-config/plugin-manifest.json /opt/deck/html/
 
 # -- Install gate --
 COPY --from=armory/gate-armory:2022.08.03.03.23.19.release-2.28.x /opt/gate /opt/gate
+
+# -- Override armory-header plugin --
+RUN wget https://github.com/armory-plugins/armory-header/releases/download/v0.1.1/armory-header-v0.1.1.zip \
+    && mv ./armory-header-v0.1.1.zip /opt/gate/plugins/ \
+    && cd /opt/gate/plugins \
+    && rm -rf armory-header-v0.1.0 armory-header-v0.1.0.zip Armory.ArmoryHeader-armory-header-v0.1.0 Armory.ArmoryHeader-armory-header-v0.1.0.zip
+
+COPY spinnaker-config/deck-plugins/plugins.json /opt/gate/local-plugin-repo/
 
 # -- Install orca --
 
