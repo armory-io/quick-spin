@@ -119,6 +119,7 @@ window.spinnakerSettings = {
     fiatEnabled: fiatEnabled,
     pipelineTemplates: pipelineTemplatesEnabled,
     roscoMode: true,
+    quickSpinEnabled: true
   },
   gateUrl: gateHost,
   notifications: {
