@@ -95,7 +95,7 @@ kubernetes:
     providerVersion: V2
     rawResourcesEndpointConfig: {}
     requiredGroupMembership: []
-    serviceAccount: true
+    kubeconfigFile: /home/spinnaker/.kube/config
   enabled: true
   primaryAccount: spinnaker
 logging.config: /opt/spinnaker/config/logback.xml
