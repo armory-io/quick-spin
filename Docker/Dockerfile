@@ -119,7 +119,7 @@ RUN chown -R mysql:mysql /var/lib/mysql
 RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
 
 # Initialize Mysql
-COPY init.sql /opt/spinnaker/init.sql
+COPY db/init.sql /opt/spinnaker/init.sql
 RUN (/usr/bin/mysqld_safe &) ; sleep 3 ; /usr/bin/mysql -u root < /opt/spinnaker/init.sql
 
 # Ownerships
