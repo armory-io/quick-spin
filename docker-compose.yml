@@ -1,7 +1,7 @@
 services:
   quick-spin:
     build: Docker
-    image: quick-spin
+    image: armory/quick-spin:latest
     container_name: quick-spin
     ports:
       - "9000:80"
