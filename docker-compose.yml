@@ -1,6 +1,5 @@
 services:
   quick-spin:
-    build: Docker
     image: armory/quick-spin:latest
     container_name: quick-spin
     ports:
