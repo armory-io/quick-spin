@@ -35,5 +35,5 @@ This stops running containers without removing them. They can be started again w
 If you want to remove containers, networks, volumes, and images created by `up`:
 
 ```
-docker compose down -v
+docker compose down -v --rmi all
 ```
