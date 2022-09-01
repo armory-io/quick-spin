@@ -45,4 +45,49 @@ databaseChangeLog:
               - column:
                   name: last_modified_by
                   value: 'chris.kotula@armory.io'
-
+  - changeSet:
+      id: nginx-application
+      author: chris.kotula@armory.io
+      changes:
+        - insert:
+            tableName: applications
+            columns:
+              - column:
+                  name: id
+                  value: nginx
+              - column:
+                  name: body
+                  value: '{"name":"NGINX","description":"simple nginx deployment","email":"chris.kotula@armory.io","updateTs":"1662039461867","createTs":null,"lastModifiedBy":"anonymous","cloudProviders":"kubernetes","trafficGuards":[],"instancePort":80,"user":"[anonymous]"}'
+              - column:
+                  name: created_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_by
+                  value: chris.kotula@armory.io
+        - insert:
+            tableName: pipelines
+            columns:
+              - column:
+                  name: id
+                  value: 64de84e3-ff6a-43d6-a61a-9cf42129b596
+              - column:
+                  name: name
+                  value: nginx
+              - column:
+                  name: application
+                  value: nginx
+              - column:
+                  name: body
+                  value: '{"id":"64de84e3-ff6a-43d6-a61a-9cf42129b596","name":"nginx","application":"nginx","schema":"1","triggers":[],"index":0,"lastModifiedBy":"anonymous","stages":[{"account":"spinnaker","cloudProvider":"kubernetes","manifests":[{"apiVersion":"apps/v1","kind":"Deployment","metadata":{"labels":{"app":"nginx"},"name":"nginx-deployment"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"nginx"}},"template":{"metadata":{"labels":{"app":"nginx"}},"spec":{"containers":[{"image":"nginx:1.14.2","name":"nginx","ports":[{"containerPort":80}]}]}}}}],"moniker":{"app":"nginx"},"name":"Deploy nginx","refId":"3","requisiteStageRefIds":[],"skipExpressionEvaluation":false,"source":"text","trafficManagement":{"enabled":false,"options":{"enableTraffic":false,"services":[]}},"type":"deployManifest"},{"failPipeline":true,"judgmentInputs":[],"name":"Remove deployment","notifications":[],"refId":"5","requisiteStageRefIds":["3"],"type":"manualJudgment"},{"account":"spinnaker","app":"nginx","cloudProvider":"kubernetes","location":"default","manifestName":"deployment nginx-deployment","mode":"static","name":"Delete (Manifest)","options":{"cascading":true,"gracePeriodSeconds":60},"refId":"6","requisiteStageRefIds":["5"],"type":"deleteManifest"}],"keepWaitingPipelines":false,"limitConcurrent":true,"spelEvaluator":"v4"}'
+              - column:
+                  name: created_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_at
+                  value: 1660301379020
+              - column:
+                  name: last_modified_by
+                  value: 'chris.kotula@armory.io'
