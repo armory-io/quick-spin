@@ -6,6 +6,9 @@ services:
       - "9000:80"
     volumes:
       - mysql-data:/var/lib/mysql
+      - type: bind
+        source: ~/.kube/config
+        target: /home/spinnaker/.kube/config
 
 volumes:
   mysql-data:
