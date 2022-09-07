@@ -16,6 +16,7 @@ ENV PATH "$PATH:/usr/local/bin/:/opt/google-cloud-sdk/bin/:/usr/local/bin/aws-ia
 RUN apk update && \
     apk upgrade && \
     apk --no-cache add --update \
+    curl \
 # Clouddriver requirements
     bash \
     ca-certificates \
@@ -140,9 +141,13 @@ COPY supervisord.conf /etc/supervisord.conf
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
+COPY start.sh /home/spinnaker/start.sh
+RUN chmod o+x /home/spinnaker/start.sh
+
 WORKDIR /home/spinnaker
 
 EXPOSE 80
 
 # Run Supervisord
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+#CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD /home/spinnaker/start.sh
