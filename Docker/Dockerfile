@@ -148,6 +148,4 @@ WORKDIR /home/spinnaker
 
 EXPOSE 80
 
-# Run Supervisord
-#CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 CMD /home/spinnaker/start.sh
