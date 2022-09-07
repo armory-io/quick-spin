@@ -4,6 +4,7 @@ services:
     container_name: quick-spin
     ports:
       - "9000:80"
+    pull_policy: always
     volumes:
       - mysql-data:/var/lib/mysql
       - type: bind
