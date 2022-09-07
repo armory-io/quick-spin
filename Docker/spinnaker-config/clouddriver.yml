@@ -86,11 +86,11 @@ kubernetes:
     kinds: []
     liveManifestCalls: false
     name: spinnaker
-    namespaces: []
+    namespaces: [default]
     oAuthScopes: []
-    omitKinds: []
+    omitKinds: [podPreset]
     omitNamespaces: []
-    onlySpinnakerManaged: false
+    onlySpinnakerManaged: true
     permissions: {}
     providerVersion: V2
     rawResourcesEndpointConfig: {}
