@@ -86,7 +86,7 @@ kubernetes:
     kinds: []
     liveManifestCalls: false
     name: spinnaker
-    namespaces: [default]
+    namespaces: []
     oAuthScopes: []
     omitKinds: [podPreset]
     omitNamespaces: []
