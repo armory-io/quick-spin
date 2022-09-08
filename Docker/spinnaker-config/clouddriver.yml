@@ -88,9 +88,9 @@ kubernetes:
     name: spinnaker
     namespaces: []
     oAuthScopes: []
-    omitKinds: []
+    omitKinds: [podPreset]
     omitNamespaces: []
-    onlySpinnakerManaged: false
+    onlySpinnakerManaged: true
     permissions: {}
     providerVersion: V2
     rawResourcesEndpointConfig: {}
