@@ -1,3 +1,20 @@
+spinnaker:
+  s3:
+    enabled: false
+sql:
+  connectionPools:
+    default:
+      default: true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/front50?useSSL=false&useUnicode=true&characterEncoding=utf8
+      password: password
+      user: front50_service
+  enabled: true
+  migration:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/front50?useSSL=false&useUnicode=true&characterEncoding=utf8
+    password: password
+    user: front50_migrate
+    additionalChangeLogs:
+      - /db/changelog/default-app-and-pipeline.yml
 logging.config: /opt/spinnaker/config/logback.xml
 server:
   address: ${services.front50.host:localhost}
