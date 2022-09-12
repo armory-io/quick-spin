@@ -38,6 +38,14 @@ If you want to remove containers, networks, volumes, and images created by `up`:
 docker compose down -v --rmi all
 ```
 
+## Local development
+
+To run quick-spin using an image built locally (so not pulling from docker hub), do the following:
+
+```shell
+docker compose -f docker-compose-dev.yml up
+```
+
 ## Kubernetes
 
 By default, the quick-spin uses `~/.kube/config` file to get kubernetes configuration.

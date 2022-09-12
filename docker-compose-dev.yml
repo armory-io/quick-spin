@@ -1,0 +1,16 @@
+services:
+  quick-spin:
+    build: Docker
+    image: quick-spin
+    container_name: quick-spin
+    ports:
+      - "9000:80"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - type: bind
+        source: ~/.kube/config
+        target: /home/spinnaker/.kube/config
+
+volumes:
+  mysql-data:
+    name: quick-spin-mysql
