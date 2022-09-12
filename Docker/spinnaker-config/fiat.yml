@@ -1,11 +1,40 @@
+enabled: true
+
+spinnaker:
+  s3:
+    enabled: false
+
+sql:
+  enabled: true
+  permissionsRepository:
+    enabled: true
+  connectionPools:
+    default:
+      default: true
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/fiat?useSSL=false&useUnicode=true&characterEncoding=utf8
+      password: password
+      user: fiat_service
+  migration:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/fiat?useSSL=false&useUnicode=true&characterEncoding=utf8
+    password: password
+    user: fiat_migrate
+
+redis:
+  enabled: false
+  permissionsRepository:
+    enabled: false
+
 logging.config: /opt/spinnaker/config/logback.xml
+
 server:
   address: ${services.fiat.host:localhost}
   port: ${services.fiat.port:7003}
+
 spectator:
   applicationName: ${spring.application.name}
   webEndpoint:
     enabled: false
+
 spinnaker:
   extensibility:
     plugins: {}
