@@ -66,7 +66,7 @@ spinnaker.baseUrl: http://localhost:9000
 stats:
   connectionTimeoutMillis: 3000
   deploymentMethod:
-    type: kubernetes_operator
+    type: quick-spin
     version: ""
   enabled: true
   endpoint: https://stats.spinnaker.io
