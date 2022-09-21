@@ -1,0 +1,24 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: quick-spin-role
+  namespace: quick-spin-sa
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: quick-spin-sa-rolebinding
+  namespace: quick-spin-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: quick-spin-sa-role
+subjects:
+- namespace: quick-spin-sa
+  kind: ServiceAccount
+  name: quick-spin-sa
