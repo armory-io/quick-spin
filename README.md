@@ -87,3 +87,11 @@ clusters:
 - cluster:
     server: https://host.docker.internal:53133
 ```
+
+### Create kubernetes resources for cluster
+
+If you want to create a namespace (`quick-spin-sa`), a service account (`quick-spin-sa`) with needed permissions and a kubeconfig (`~/.kube/kubeconfig.quick-spin`), you need to execute the shell script `quick-spin/Docker/cluster-setup/create-resources.sh`.
+
+! The script uses `LOCAL_KUBECONFIG_FILE` variable, that needs to be updated with your kubeconfig full path. !
+
+This kubeconfig is also used in `docker-compose.yml`.
