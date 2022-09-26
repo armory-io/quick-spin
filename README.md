@@ -1,17 +1,19 @@
 ## Prerequisites
 
-To use these files, you must first have the following installed:
+To run `quick-spin` you must have the following installed:
 
 - [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/) (already included in Docker Desktop)
+- [Docker Compose](https://docs.docker.com/compose/install/) (installed with Docker Desktop)
 
 ## Usage
 
-The following steps will run a local instance of `quick-spin` using [docker compose](https://docs.docker.com/compose/).
+To run a local instance of `quick-spin` using [docker compose](https://docs.docker.com/compose/):
 
 1. Clone this repository.
-2. Change directory into the root of the project.
+2. Change directory into the project root.
 3. Run the `docker compose up` command.
+
+For example:
 
 ```shell
 git clone https://github.com/armory-io/quick-spin.git
@@ -19,22 +21,24 @@ cd quick-spin
 docker compose up
 ```
 
-Open Spinnaker UI in your web browser: http://localhost:9000
+4. Open the Spinnaker UI in your web browser: http://localhost:9000
 
 ### Stop quick-spin
 
-If you want to **stop** quick-spin, you can use:
+To **stop** `quick-spin`:
 
-1. `Ctrl + c` keyboard shortcut.
-2. `docker compose stop`
+1. Use the `Ctrl + c` keyboard shortcut.
+2. Use the  `docker compose stop` command.
 
-This stops running containers without removing them. They can be started again with `docker compose start`
+This stops running the `quick-spin` containers.  
+The containers are not removed. 
+Start `quick-spin` again using `docker compose start`.
 
 ### Remove quick-spin
 
-If you want to remove containers, networks, volumes, and images created by `up`:
+To completely the `quick-spin` containers, networks, volumes, and images use:
 
-```
+```shell
 docker compose down -v --rmi all
 ```
 
@@ -48,8 +52,8 @@ docker compose -f docker-compose-dev.yml up
 
 ## Kubernetes
 
-By default, the quick-spin uses `~/.kube/config` file to get kubernetes configuration.
-You can define a different patch for the config file in docker-compose.yml e.g.
+By default, `quick-spin` uses the `~/.kube/config` kubernetes configuration file.
+To define a customs patch update the target in the `docker-compose.yml` file. For example:
 
 ```yaml
 services:
@@ -62,13 +66,18 @@ services:
 
 ### More kubernetes settings
 
-By this [link](https://docs.armory.io/armory-enterprise/installation/armory-operator/op-manifest-reference/providers/#kubernetes) you can find more information about
-kubernetes configuration. All these settings can be defined or changed in `Docker/spinnaker-config/clouddriver.yml` file.
+Define or change the `quick-spin` settings in the `Docker/spinnaker-config/clouddriver.yml` file.
+
+For more information about Kubernetes configuration see: [link](https://docs.armory.io/armory-enterprise/installation/armory-operator/op-manifest-reference/providers/#kubernetes). 
 
 ### Local kubernetes cluster
 
-If you want to connect the quick spin to local kubernetes cluster e.g. kind, minikube then you need to open your kubernetes config file and
-replace `127.0.0.1` or `localhost` in server host with `host.docker.internal` e.g.
+To connect `quick-spin` to a local kubernetes cluster (_kind_ or _minikube_),
+update the `~/.kube/config` file `server:`  `localhost` (127.0.0.1) value to `host.docker.internal`. 
+
+For example:
+
+Change this default configuration:
 
 ```yaml
 # ~/.kube/config
@@ -78,7 +87,7 @@ clusters:
     server: https://127.0.0.1:53133
 ```
 
-to
+to:
 
 ```yaml
 # ~/.kube/config
@@ -90,8 +99,11 @@ clusters:
 
 ### Create kubernetes resources for cluster
 
-If you want to create a namespace (`quick-spin-sa`), a service account (`quick-spin-sa`) with needed permissions and a kubeconfig (`~/.kube/kubeconfig.quick-spin`), you need to execute the shell script `quick-spin/Docker/cluster-setup/create-resources.sh`.
+To create a namespace (`quick-spin-sa`), a service account (`quick-spin-sa`), with needed permissions and a kubeconfig (`~/.kube/kubeconfig.quick-spin`), execute the shell script:
 
-! The script uses `LOCAL_KUBECONFIG_FILE` variable, that needs to be updated with your kubeconfig full path. !
+```shell
+quick-spin/Docker/cluster-setup/create-resources.sh`
+```
+> The script uses the `LOCAL_KUBECONFIG_FILE` variable. This variable must be updated with your kubeconfig full path.
 
 This kubeconfig is also used in `docker-compose.yml`.
