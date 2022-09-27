@@ -3,7 +3,7 @@ SERVICE_ACCOUNT_NAME='quick-spin-sa'
 NAMESPACE='quick-spin-sa'
 NEW_CONTEXT='quick-spin-sa'
 LOCAL_KUBECONFIG_FILE='/Users/armory/.kube/dev.yaml' # This should be the path of your local kubeconfig.
-KUBECONFIG_FILE='/Users/armory/.kube/kubeconfig.quick-spin'
+KUBECONFIG_FILE='/Users/armory/.kube/config'
 CONTEXT=$(kubectl --kubeconfig $LOCAL_KUBECONFIG_FILE config current-context)
 
 kubectl --kubeconfig $LOCAL_KUBECONFIG_FILE create namespace $NAMESPACE
