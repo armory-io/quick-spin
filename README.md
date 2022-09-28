@@ -46,6 +46,13 @@ To run quick-spin using an image built locally (so not pulling from docker hub),
 docker compose -f docker-compose-dev.yml up
 ```
 
+## Custom Settings
+
+On your host machine:
+
+* Use `~/.spinnaker/config/quick-spin-profiles/spinnaker-quick-spin.yml` to define settings for all services.
+* Use `~/.spinnaker/config/quick-spin-profiles/{SERVICE_NAME}-quick-spin.yml` to define settings for a particular service.
+
 ## Kubernetes
 
 By default, the quick-spin uses `~/.kube/config` file to get kubernetes configuration.
@@ -59,11 +66,6 @@ services:
         source: ~/.kube/config
         target: /home/spinnaker/.kube/config
 ```
-
-### More kubernetes settings
-
-By this [link](https://docs.armory.io/armory-enterprise/installation/armory-operator/op-manifest-reference/providers/#kubernetes) you can find more information about
-kubernetes configuration. All these settings can be defined or changed in `Docker/spinnaker-config/clouddriver.yml` file.
 
 ### Local kubernetes cluster
 
@@ -90,7 +92,7 @@ clusters:
 
 ### Create kubernetes resources for cluster
 
-If you want to create a namespace (`quick-spin-sa`), a service account (`quick-spin-sa`) with needed permissions and a kubeconfig (`~/.kube/kubeconfig.quick-spin`), you need to execute the shell script `quick-spin/Docker/cluster-setup/create-resources.sh`.
+If you want to create a namespace (`quick-spin-sa`), a service account (`quick-spin-sa`) with needed permissions and a kubeconfig (`~/.kube/config`), you need to execute the shell script `quick-spin/Docker/cluster-setup/create-resources.sh`.
 
 ! The script uses `LOCAL_KUBECONFIG_FILE` variable, that needs to be updated with your kubeconfig full path. !
 
