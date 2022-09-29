@@ -119,8 +119,8 @@ kubernetes:
     dockerRegistries: []
     kinds: []
     liveManifestCalls: false
-    name: spinnaker
-    namespaces: []
+    name: kubernetes
+    namespaces: [quick-spin-dev, quick-spin-prod]
     oAuthScopes: []
     omitKinds: [podPreset]
     omitNamespaces: []
