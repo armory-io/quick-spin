@@ -1,17 +1,17 @@
 databaseChangeLog:
   - changeSet:
-      id: create-plugin-versions-table
-      author: chris.kotula@armory.io
+      id: create-default-pipelines
+      author: engineering@armory.io
       changes:
         - insert:
             tableName: applications
             columns:
               - column:
                   name: id
-                  value: 'my first application'
+                  value: 'my-first-application'
               - column:
                   name: body
-                  value: '{"name":"my first application","description":"enteradescription","email":"chris.kotula@armory.io","updateTs":"1660301379020","createTs":null,"lastModifiedBy":"anonymous","cloudProviders":"kubernetes","trafficGuards":[],"instancePort":80,"repoSlug":"projectname","repoType":"github","repoProjectKey":"projectname","user":"[anonymous]"}'
+                  value: '{"name":"my-first-application","description":"enteradescription","email":"engineering@armory.io","updateTs":"1660301379020","createTs":null,"lastModifiedBy":"anonymous","cloudProviders":"kubernetes","trafficGuards":[],"instancePort":80,"repoSlug":"projectname","repoType":"github","repoProjectKey":"projectname","user":"[anonymous]"}'
               - column:
                   name: created_at
                   value: 1660301379020
@@ -20,7 +20,7 @@ databaseChangeLog:
                   value: 1660301379020
               - column:
                   name: last_modified_by
-                  value: 'daniela.sandu@armory.io'
+                  value: 'engineering@armory.io'
         - insert:
             tableName: pipelines
             columns:
@@ -32,10 +32,10 @@ databaseChangeLog:
                   value: 'prepare-quick-spin-environment'
               - column:
                   name: application
-                  value: 'my first application'
+                  value: 'my-first-application'
               - column:
                   name: body
-                  value: '{"id":"15168498-253c-4045-a2b1-f567b93d6cec","name":"prepare-quick-spin-environment","application":"my first application","appConfig":{},"keepWaitingPipelines":false,"lastModifiedBy":"mrampton","limitConcurrent":true,"parameterConfig":[{"default":"quick-spin-dev","description":"Represents the ''dev'' environment","hasOptions":false,"label":"Dev Namespace","name":"DEV_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true},{"default":"quick-spin-prod","description":"Represents the ''prod'' environment","hasOptions":false,"label":"Prod Namespace","name":"PROD_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true}],"schema":"1","spelEvaluator":"v4","stages":[{"account":"spinnaker","cloudProvider":"kubernetes","manifests":[{"apiVersion":"v1","kind":"Namespace","metadata":{"labels":{"armory.io/app":"quick-spin"},"name":"${parameters[''DEV_NAMESPACE'']}"}}],"moniker":{"app":"quick-spin-pipelines"},"name":"Create quick-spin-dev Namespace","refId":"1","requisiteStageRefIds":[],"skipExpressionEvaluation":false,"source":"text","trafficManagement":{"enabled":false,"options":{"enableTraffic":false}},"type":"deployManifest"},{"account":"spinnaker","cloudProvider":"kubernetes","manifests":[{"apiVersion":"v1","kind":"Namespace","metadata":{"labels":{"armory.io/app":"quick-spin"},"name":"${parameters[''PROD_NAMESPACE'']}"}}],"moniker":{"app":"quick-spin-pipelines"},"name":"Create quick-spin-prod Namespace","refId":"2","requisiteStageRefIds":[],"skipExpressionEvaluation":false,"source":"text","trafficManagement":{"enabled":false,"options":{"enableTraffic":false}},"type":"deployManifest"}],"triggers":[]}'
+                  value: '{"id":"15168498-253c-4045-a2b1-f567b93d6cec","name":"prepare-quick-spin-environment","application":"my-first-application","appConfig":{},"keepWaitingPipelines":false,"lastModifiedBy":"mrampton","limitConcurrent":true,"parameterConfig":[{"default":"quick-spin-dev","description":"Represents the ''dev'' environment","hasOptions":false,"label":"Dev Namespace","name":"DEV_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true},{"default":"quick-spin-prod","description":"Represents the ''prod'' environment","hasOptions":false,"label":"Prod Namespace","name":"PROD_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true}],"schema":"1","spelEvaluator":"v4","stages":[{"account":"spinnaker","cloudProvider":"kubernetes","manifests":[{"apiVersion":"v1","kind":"Namespace","metadata":{"labels":{"armory.io/app":"quick-spin"},"name":"${parameters[''DEV_NAMESPACE'']}"}}],"moniker":{"app":"my-first-application"},"name":"Create quick-spin-dev Namespace","refId":"1","requisiteStageRefIds":[],"skipExpressionEvaluation":false,"source":"text","trafficManagement":{"enabled":false,"options":{"enableTraffic":false}},"type":"deployManifest"},{"account":"spinnaker","cloudProvider":"kubernetes","manifests":[{"apiVersion":"v1","kind":"Namespace","metadata":{"labels":{"armory.io/app":"quick-spin"},"name":"${parameters[''PROD_NAMESPACE'']}"}}],"moniker":{"app":"my-first-application"},"name":"Create quick-spin-prod Namespace","refId":"2","requisiteStageRefIds":[],"skipExpressionEvaluation":false,"source":"text","trafficManagement":{"enabled":false,"options":{"enableTraffic":false}},"type":"deployManifest"}],"triggers":[]}'
               - column:
                   name: created_at
                   value: 1660301379020
@@ -44,7 +44,7 @@ databaseChangeLog:
                   value: 1660301379020
               - column:
                   name: last_modified_by
-                  value: 'daniela.sandu@armory.io'
+                  value: 'engineering@armory.io'
         - insert:
             tableName: pipelines
             columns:
@@ -56,10 +56,10 @@ databaseChangeLog:
                   value: 'basic-deployment-pipeline'
               - column:
                   name: application
-                  value: 'my first application'
+                  value: 'my-first-application'
               - column:
                   name: body
-                  value: '{"id":"93dxvw5czagm26ezso26","name":"basic-deployment-pipeline","application":"my first application","appConfig":{},"keepWaitingPipelines":false,"lastModifiedBy":"mrampton","limitConcurrent":true,"parameterConfig":[{"default":"quick-spin-dev","description":"Represents the ''dev'' environment","hasOptions":false,"label":"Dev Namespace","name":"DEV_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true},{"default":"quick-spin-prod","description":"Represents the ''prod'' environment","hasOptions":false,"label":"Prod Namespace","name":"PROD_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true}],"schema":"1","spelEvaluator":"v4","stages":[{"account":"spinnaker","cloudProvider":"kubernetes","manifests":[{"apiVersion":"v1","kind":"Service","metadata":{"labels":{"run":"quick-spin-nginx"},"name":"quick-spin-nginx","namespace":"${parameters[''DEV_NAMESPACE'']}"},"spec":{"ports":[{"name":"http","port":8080,"protocol":"TCP","targetPort":80}],"selector":{"run":"quick-spin-nginx"},"type":"NodePort"}},{"apiVersion":"apps/v1","kind":"Deployment","metadata":{"labels":{"app":"quick-spin-nginx"},"name":"quick-spin-nginx","namespace":"${parameters[''DEV_NAMESPACE'']}"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"quick-spin-nginx"}},"template":{"metadata":{"labels":{"app":"quick-spin-nginx"}},"spec":{"containers":[{"image":"nginx:1.14.2","name":"nginx","ports":[{"containerPort":80}]}]}}}}],"moniker":{"app":"quick-spin-pipelines"},"name":"Deploy nginx","namespaceOverride":"","refId":"1","requisiteStageRefIds":[],"skipExpressionEvaluation":false,"source":"text","trafficManagement":{"enabled":false,"options":{"enableTraffic":false,"services":[]}},"type":"deployManifest"}],"triggers":[]}'
+                  value: '{"id":"93dxvw5czagm26ezso26","name":"basic-deployment-pipeline","application":"my-first-application","appConfig":{},"keepWaitingPipelines":false,"lastModifiedBy":"mrampton","limitConcurrent":true,"parameterConfig":[{"default":"quick-spin-dev","description":"Represents the ''dev'' environment","hasOptions":false,"label":"Dev Namespace","name":"DEV_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true},{"default":"quick-spin-prod","description":"Represents the ''prod'' environment","hasOptions":false,"label":"Prod Namespace","name":"PROD_NAMESPACE","options":[{"value":""}],"pinned":false,"required":true}],"schema":"1","spelEvaluator":"v4","stages":[{"account":"spinnaker","cloudProvider":"kubernetes","manifests":[{"apiVersion":"v1","kind":"Service","metadata":{"labels":{"run":"quick-spin-nginx"},"name":"quick-spin-nginx","namespace":"${parameters[''DEV_NAMESPACE'']}"},"spec":{"ports":[{"name":"http","port":8080,"protocol":"TCP","targetPort":80}],"selector":{"run":"quick-spin-nginx"},"type":"NodePort"}},{"apiVersion":"apps/v1","kind":"Deployment","metadata":{"labels":{"app":"quick-spin-nginx"},"name":"quick-spin-nginx","namespace":"${parameters[''DEV_NAMESPACE'']}"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"quick-spin-nginx"}},"template":{"metadata":{"labels":{"app":"quick-spin-nginx"}},"spec":{"containers":[{"image":"nginx:1.14.2","name":"nginx","ports":[{"containerPort":80}]}]}}}}],"moniker":{"app":"my-first-application"},"name":"Deploy nginx","namespaceOverride":"","refId":"1","requisiteStageRefIds":[],"skipExpressionEvaluation":false,"source":"text","trafficManagement":{"enabled":false,"options":{"enableTraffic":false,"services":[]}},"type":"deployManifest"}],"triggers":[]}'
               - column:
                   name: created_at
                   value: 1660301379020
@@ -68,7 +68,7 @@ databaseChangeLog:
                   value: 1660301379020
               - column:
                   name: last_modified_by
-                  value: 'daniela.sandu@armory.io'
+                  value: 'engineering@armory.io'
         - insert:
             tableName: pipelines
             columns:
@@ -80,10 +80,10 @@ databaseChangeLog:
                   value: 'teardown-quick-spin-environment'
               - column:
                   name: application
-                  value: 'my first application'
+                  value: 'my-first-application'
               - column:
                   name: body
-                  value: '{"id":"ho4rago7am9hwflwxchb","name":"teardown-quick-spin-environment","application":"my first application","appConfig":{},"keepWaitingPipelines":false,"lastModifiedBy":"mrampton","limitConcurrent":true,"parameterConfig":[{"default":"quick-spin-dev","description":"Represents the ''dev'' environment","hasOptions":false,"label":"Dev Namespace","name":"DEV_NAMESPACE","options":[{"value":"quick-spin-dev"},{"value":""}],"pinned":false,"required":true},{"default":"quick-spin-prod","description":"Represents the ''prod'' environment","hasOptions":false,"label":"Prod Namespace","name":"PROD_NAMESPACE","options":[{"value":"quick-spin-prod"},{"value":""}],"pinned":false,"required":true}],"schema":"1","spelEvaluator":"v4","stages":[{"account":"spinnaker","app":"quick-spin-pipelines","cloudProvider":"kubernetes","location":"${parameters[''DEV_NAMESPACE'']}","manifestName":"namespace ${parameters[''DEV_NAMESPACE'']}","mode":"static","name":"Delete dev Namespace","options":{"cascading":true},"refId":"1","requisiteStageRefIds":[],"type":"deleteManifest"},{"account":"spinnaker","app":"quick-spin-pipelines","cloudProvider":"kubernetes","location":"${parameters[''PROD_NAMESPACE'']}","manifestName":"namespace ${parameters[''PROD_NAMESPACE'']}","mode":"static","name":"Delete prod Namespace","options":{"cascading":true},"refId":"2","requisiteStageRefIds":[],"type":"deleteManifest"}],"triggers":[]}'
+                  value: '{"id":"ho4rago7am9hwflwxchb","name":"teardown-quick-spin-environment","application":"my-first-application","appConfig":{},"keepWaitingPipelines":false,"lastModifiedBy":"mrampton","limitConcurrent":true,"parameterConfig":[{"default":"quick-spin-dev","description":"Represents the ''dev'' environment","hasOptions":false,"label":"Dev Namespace","name":"DEV_NAMESPACE","options":[{"value":"quick-spin-dev"},{"value":""}],"pinned":false,"required":true},{"default":"quick-spin-prod","description":"Represents the ''prod'' environment","hasOptions":false,"label":"Prod Namespace","name":"PROD_NAMESPACE","options":[{"value":"quick-spin-prod"},{"value":""}],"pinned":false,"required":true}],"schema":"1","spelEvaluator":"v4","stages":[{"account":"spinnaker","app":"my-first-application","cloudProvider":"kubernetes","location":"${parameters[''DEV_NAMESPACE'']}","manifestName":"namespace ${parameters[''DEV_NAMESPACE'']}","mode":"static","name":"Delete dev Namespace","options":{"cascading":true},"refId":"1","requisiteStageRefIds":[],"type":"deleteManifest"},{"account":"spinnaker","app":"my-first-application","cloudProvider":"kubernetes","location":"${parameters[''PROD_NAMESPACE'']}","manifestName":"namespace ${parameters[''PROD_NAMESPACE'']}","mode":"static","name":"Delete prod Namespace","options":{"cascading":true},"refId":"2","requisiteStageRefIds":[],"type":"deleteManifest"}],"triggers":[]}'
               - column:
                   name: created_at
                   value: 1660301379020
@@ -92,5 +92,5 @@ databaseChangeLog:
                   value: 1660301379020
               - column:
                   name: last_modified_by
-                  value: 'daniela.sandu@armory.io'
+                  value: 'engineering@armory.io'
 

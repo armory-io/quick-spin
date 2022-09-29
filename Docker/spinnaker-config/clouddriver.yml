@@ -129,7 +129,7 @@ kubernetes:
     providerVersion: V2
     rawResourcesEndpointConfig: {}
     requiredGroupMembership: []
-    kubeconfigFile: /home/spinnaker/.kube/config
+    kubeconfigFile: /home/spinnaker/.kube/quick-spin-sa.kubeconfig
   enabled: true
   primaryAccount: spinnaker
 logging.config: /opt/spinnaker/config/logback.xml
