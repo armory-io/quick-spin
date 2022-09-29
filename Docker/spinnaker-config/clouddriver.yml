@@ -131,7 +131,7 @@ kubernetes:
     requiredGroupMembership: []
     kubeconfigFile: /home/spinnaker/.kube/quick-spin-sa.kubeconfig
   enabled: true
-  primaryAccount: spinnaker
+  primaryAccount: kubernetes
 logging.config: /opt/spinnaker/config/logback.xml
 oracle:
   accounts: []
