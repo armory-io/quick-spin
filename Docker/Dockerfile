@@ -89,8 +89,8 @@ COPY spinnaker-config/settings.js spinnaker-config/plugin-manifest.json /opt/dec
 COPY --from=armory/gate-armory:2022.08.03.03.23.19.release-2.28.x /opt/gate /opt/gate
 
 # -- Override armory-header plugin --
-RUN wget https://github.com/armory-plugins/armory-header/releases/download/v0.1.1/armory-header-v0.1.1.zip \
-    && mv ./armory-header-v0.1.1.zip /opt/gate/plugins/ \
+RUN wget https://github.com/armory-plugins/armory-header/releases/download/v0.1.2/armory-header-v0.1.2.zip \
+    && mv ./armory-header-v0.1.2.zip /opt/gate/plugins/ \
     && cd /opt/gate/plugins \
     && rm -rf armory-header-v0.1.0 armory-header-v0.1.0.zip Armory.ArmoryHeader-armory-header-v0.1.0 Armory.ArmoryHeader-armory-header-v0.1.0.zip
 
