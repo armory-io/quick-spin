@@ -120,7 +120,7 @@ kubernetes:
     kinds: []
     liveManifestCalls: false
     name: kubernetes
-    namespaces: [quick-spin-dev, quick-spin-prod]
+    namespaces: []
     oAuthScopes: []
     omitKinds: [podPreset]
     omitNamespaces: []
@@ -129,7 +129,7 @@ kubernetes:
     providerVersion: V2
     rawResourcesEndpointConfig: {}
     requiredGroupMembership: []
-    kubeconfigFile: /home/spinnaker/.kube/quick-spin-sa.kubeconfig
+    kubeconfigFile: /home/spinnaker/.kube/quick-spin.kubeconfig
   enabled: true
   primaryAccount: kubernetes
 logging.config: /opt/spinnaker/config/logback.xml
