@@ -9,7 +9,8 @@
         "date": "2022-09-30T18:03:14.426330Z",
         "requires": "deck>=0.0.0",
         "sha512sum": "9a2788091e434b8d46bd9f1ce1e2a3c49d1758c88e7eaba2126f03b580eb2587f8e1d5505dda42423c0feb3873ee006a0c389cca03f634baf55abfd61f040f70",
-        "url": "https://github.com/armory-plugins/armory-header/releases/download/v0.1.2/armory-header-v0.1.2.zip"
-      }    ]
+        "url": "file:///opt/gate/plugins/armory-header-v0.1.2.zip"
+      }    
+    ]
   }
 ]
