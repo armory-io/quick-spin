@@ -38,7 +38,6 @@ gcb:
 github-status:
   enabled: false
 global.spinnaker.timezone: America/Los_Angeles
-logging.config: /opt/spinnaker/config/logback.xml
 pubsub:
   enabled: false
   google:

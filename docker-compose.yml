@@ -10,7 +10,7 @@ services:
       - ~/.spinnaker/config/quick-spin-profiles:/opt/spinnaker/config/quick-spin-profiles
     environment:
       - "SPRING_CONFIG_LOCATION=classpath:/,file:/opt/spinnaker/config/,file:/opt/spinnaker/config/quick-spin-profiles/"
-      - "SPRING_PROFILES_ACTIVE=quick-spin,local"
+      - "SPRING_PROFILES_ACTIVE=quick-spin,armory,local"
 
 volumes:
   mysql-data:

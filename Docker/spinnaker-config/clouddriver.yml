@@ -132,7 +132,6 @@ kubernetes:
     kubeconfigFile: /home/spinnaker/.kube/quick-spin.kubeconfig
   enabled: true
   primaryAccount: kubernetes
-logging.config: /opt/spinnaker/config/logback.xml
 oracle:
   accounts: []
   bakeryDefaults:

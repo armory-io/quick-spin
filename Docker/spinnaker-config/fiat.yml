@@ -24,8 +24,6 @@ redis:
   permissionsRepository:
     enabled: false
 
-logging.config: /opt/spinnaker/config/logback.xml
-
 server:
   address: ${services.fiat.host:localhost}
   port: ${services.fiat.port:7003}
