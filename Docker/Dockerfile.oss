@@ -107,7 +107,7 @@ RUN mkdir -p /db/changelog
 COPY db/front50/changelog/default-app-and-pipeline.yml /db/changelog/default-app-and-pipeline.yml
 
 # Add changelog to existing jar so it's available on classpath
-# RUN jar uf /opt/front50/lib/front50-sql-2022.08.02.17.26.34.release-1.28.x.jar  /db/changelog/default-app-and-pipeline.yml
+RUN jar uf /opt/front50/lib/front50-sql-2.25.2.jar  /db/changelog/default-app-and-pipeline.yml
 
 # -- Install echo --
 COPY --from=us-docker.pkg.dev/spinnaker-community/docker/echo:2.34.2 /opt/echo /opt/echo
