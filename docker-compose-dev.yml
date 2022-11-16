@@ -7,11 +7,11 @@ services:
       - "9000:80"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ~/.kube/quick-spin-sa.kubeconfig:/home/spinnaker/.kube/quick-spin-sa.kubeconfig
+      - ~/.kube/:/home/spinnaker/.kube/
       - ~/.spinnaker/config/quick-spin-profiles:/opt/spinnaker/config/quick-spin-profiles
     environment:
       - "SPRING_CONFIG_LOCATION=classpath:/,file:/opt/spinnaker/config/,file:/opt/spinnaker/config/quick-spin-profiles/"
-      - "SPRING_PROFILES_ACTIVE=quick-spin,local"
+      - "SPRING_PROFILES_ACTIVE=quick-spin,armory,local"
 
 volumes:
   mysql-data:

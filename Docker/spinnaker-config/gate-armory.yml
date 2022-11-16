@@ -1,0 +1,4 @@
+armory:
+  registrationId: armory-quick-spin-install
+logging:
+  config: /opt/spinnaker/config/logback.xml
