@@ -1,0 +1,20 @@
+services:
+  quick-spin:
+    build: 
+      context: ./Docker
+      dockerfile: Dockerfile.oss
+    image: quick-spin
+    container_name: quick-spin
+    ports:
+      - "9000:80"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ~/.kube/:/home/spinnaker/.kube/
+      - ~/.spinnaker/config/quick-spin-profiles:/opt/spinnaker/config/quick-spin-profiles
+    environment:
+      - "SPRING_CONFIG_LOCATION=classpath:/,file:/opt/spinnaker/config/,file:/opt/spinnaker/config/quick-spin-profiles/"
+      - "SPRING_PROFILES_ACTIVE=quick-spin,local"
+
+volumes:
+  mysql-data:
+    name: quick-spin-mysql
