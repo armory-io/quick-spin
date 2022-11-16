@@ -3,8 +3,8 @@ services:
     build: 
       context: ./Docker
       dockerfile: Dockerfile.oss
-    image: quick-spin
-    container_name: quick-spin
+    image: quick-spin-oss
+    container_name: quick-spin-oss
     ports:
       - "9000:80"
     volumes:
@@ -17,4 +17,4 @@ services:
 
 volumes:
   mysql-data:
-    name: quick-spin-mysql
+    name: quick-spin-oss-mysql
