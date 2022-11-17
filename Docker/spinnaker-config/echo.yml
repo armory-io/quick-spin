@@ -45,7 +45,8 @@ pubsub:
     publishers: []
     pubsubType: GOOGLE
     subscriptions: []
-rest.enabled: true
+rest:
+  enabled: false
 server:
   address: ${services.echo.host:localhost}
   port: ${services.echo.port:8089}
