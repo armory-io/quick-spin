@@ -57,5 +57,5 @@ jobs:
           file: ./Dockerfile.oss
           platforms: ${{ inputs.platforms }}
           push: true
-          tags: 'oss/quick-spin:latest, oss/quick-spin:${{ github.sha }}'
+          tags: 'armory/quick-spin-oss:latest, oss/quick-spin-oss:${{ github.sha }}'
  
