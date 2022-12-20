@@ -26,10 +26,10 @@ services:
     host: 0.0.0.0
     port: 7002
   deck:
-    baseUrl: http://localhost:9000
+    baseUrl: http://localhost:80
     enabled: true
     host: 0.0.0.0
-    port: 9000
+    port: 80
   dinghy:
     baseUrl: http://localhost:8081
     enabled: false
@@ -61,10 +61,10 @@ services:
     host: 0.0.0.0
     port: 8080
   gate:
-    baseUrl: http://localhost:8084
+    baseUrl: http://localhost:80/api/v1
     enabled: true
     host: 0.0.0.0
-    port: 8084
+    port: 80
   igor:
     baseUrl: http://localhost:8088
     enabled: false
