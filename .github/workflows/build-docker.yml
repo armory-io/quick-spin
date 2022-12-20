@@ -14,7 +14,7 @@ on:
         required: true
 
 jobs:
-  docker:
+  docker-armory:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +32,30 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./Docker
+          file: ./Dockerfile.armory
           platforms: ${{ inputs.platforms }}
           push: true
-          tags: ${{ inputs.tags }}
+          tags: 'armory/quick-spin:latest, armory/quick-spin:${{ github.sha }}'
+  docker-oss:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PASS }}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./Docker
+          file: ./Dockerfile.oss
+          platforms: ${{ inputs.platforms }}
+          push: true
+          tags: 'armory/quick-spin-oss:latest, oss/quick-spin-oss:${{ github.sha }}'
+ 

@@ -10,5 +10,4 @@ jobs:
     uses: ./.github/workflows/build-docker.yml
     with:
       platforms: 'linux/amd64,linux/arm64'
-      tags: 'armory/quick-spin:latest, armory/quick-spin:${{ github.sha }}'
     secrets: inherit
